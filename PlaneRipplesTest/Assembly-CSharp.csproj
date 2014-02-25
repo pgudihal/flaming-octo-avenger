@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\HUDFPS.cs" />
      <Compile Include="Assets\Scripts\MyColor.cs" />
+     <Compile Include="Assets\Scripts\PlayerInputControl.cs" />
      <Compile Include="Assets\Scripts\SceneDefaults.cs" />
      <Compile Include="Assets\Scripts\WavesHandler.cs" />
      <Compile Include="Assets\Scripts\WavesHandlerOriginal.cs" />

@@ -2,8 +2,9 @@
 	Properties 
 	{
 		_Tint ("Tint", Color) = (.5,.5,.5,1)
-		_BGTex("Background Texture",2D) = "black"{}
-		_Ramp      ("Ramp Texture",2D) = "white"{}
+		_BGTex ("Background Texture",2D) = "black"{}
+		_Ramp ("Ramp Texture",2D) = "white"{}
+		_Offset("Ramp Offest",Range(0,1)) = 0
 	}
 	SubShader 
 	{
@@ -22,6 +23,7 @@
 			half4 _Tint;
 			sampler2D _Ramp;
 			sampler2D _BGTex;
+			half _Offset;
 
 			struct v2f {
 				float4 vertex : POSITION;
@@ -43,7 +45,7 @@
 			
 			half4 frag (v2f i) : COLOR
 			{ 
-				half4 ramp = tex2D(_Ramp,float2(i.color.r,.1));
+				half4 ramp = tex2D(_Ramp,float2(i.color.r + _Offset,.1));
 				half4 finalColor = (tex2D(_BGTex,i.texcoord) + ramp) * _Tint;
 				finalColor.a = 1;
 				return finalColor;

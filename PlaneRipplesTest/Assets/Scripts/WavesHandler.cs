@@ -107,7 +107,7 @@ public class WavesHandler : MonoBehaviour
 	
 	void Update () 
 	{	
-		if(Input.GetMouseButtonDown(0))disturbRandom();
+		if(Input.GetKeyDown(KeyCode.Space))disturbRandom();
 		
 		if(vertexSet == 1)
 		{
@@ -174,30 +174,60 @@ public class WavesHandler : MonoBehaviour
 			colorSet2[(i-1)*length+j].r += disturbStrength;
 		}
 	}
-	
-//	public void disturbVertex(Vector2 v, float disturbStrength)
-//	{
-//		int j = Mathf.FloorToInt(v.x);
-//		int i = Mathf.FloorToInt(v.y);
-//		//Debug.Log("i: " + i + "j: " + j);
-//		
-//		if(vertexSet == 1)
-//		{
-//			newVertices1[i*length+j].y += disturbStrength;
-//			newVertices1[i*length+j+1].y += disturbStrength;
-//			newVertices1[i*length+j-1].y += disturbStrength;
-//			newVertices1[(i+1)*length+j].y += disturbStrength;
-//			newVertices1[(i-1)*length+j].y += disturbStrength;
-//		}
-//		else
-//		{
-//			newVertices2[i*length+j].y += disturbStrength;
-//			newVertices2[i*length+j+1].y += disturbStrength;
-//			newVertices2[i*length+j-1].y += disturbStrength;
-//			newVertices2[(i+1)*length+j].y += disturbStrength;
-//			newVertices2[(i-1)*length+j].y += disturbStrength;
-//		}
-//	}
+
+	//automaticly finds the closest vertex when given a world point
+	public void disturbPoint(Vector3 point)
+	{
+		Vector3 vertex = NearestVertexTo(point);
+
+		int j = Mathf.FloorToInt(vertex.x);
+		int i = Mathf.FloorToInt(vertex.z);
+		//Debug.Log("i: " + i + "j: " + j);
+		
+		if(vertexSet == 1)
+		{
+			colorSet1[i*length+j].r += disturbStrength;
+			colorSet1[i*length+j+1].r += disturbStrength;
+			colorSet1[i*length+j-1].r += disturbStrength;
+			colorSet1[(i+1)*length+j].r += disturbStrength;
+			colorSet1[(i-1)*length+j].r += disturbStrength;
+		}
+		else
+		{
+			colorSet2[i*length+j].r += disturbStrength;
+			colorSet2[i*length+j+1].r += disturbStrength;
+			colorSet2[i*length+j-1].r += disturbStrength;
+			colorSet2[(i+1)*length+j].r += disturbStrength;
+			colorSet2[(i-1)*length+j].r += disturbStrength;
+		}
+	}
+
+	//finds the nearest point on a mesh when given a point in world space
+	private Vector3 NearestVertexTo(Vector3 point)
+	{
+		// convert point to local space
+		point = transform.InverseTransformPoint(point);
+		
+		Mesh mesh = GetComponent<MeshFilter>().mesh;
+		float minDistanceSqr = Mathf.Infinity;
+		Vector3 nearestVertex = Vector3.zero;
+		
+		// scan all vertices to find nearest
+		foreach (Vector3 vertex in mesh.vertices)
+		{
+			Vector3 diff = point-vertex;
+			float distSqr = diff.sqrMagnitude;
+			
+			if (distSqr < minDistanceSqr)
+			{
+				minDistanceSqr = distSqr;
+				nearestVertex = vertex;
+			}
+		}
+		
+		// convert nearest vertex back to world space
+		return transform.TransformPoint(nearestVertex);
+	}
 	
 	private void solveTangents(Mesh mesh)
     {
