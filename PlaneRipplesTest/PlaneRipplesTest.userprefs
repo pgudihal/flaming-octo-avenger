@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerInputControl.cs">
     <Files>
-      <File FileName="Assets\Scripts\WavesHandler.cs" Line="179" Column="3" />
+      <File FileName="Assets\Scripts\WavesHandler.cs" Line="4" Column="14" />
       <File FileName="Assets\Shaders\WaveColor.shader" Line="48" Column="27" />
-      <File FileName="Assets\Scripts\PlayerInputControl.cs" Line="15" Column="2" />
+      <File FileName="Assets\Scripts\PlayerInputControl.cs" Line="19" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
