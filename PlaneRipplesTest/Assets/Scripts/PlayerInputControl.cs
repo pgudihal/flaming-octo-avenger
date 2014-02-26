@@ -21,7 +21,9 @@ public class PlayerInputControl : MonoBehaviour
 			if (Physics.Raycast(ray, out hit, 1000))
 			{
 				Debug.DrawLine(ray.origin, hit.point);
-				waveScript.disturbPoint(hit.point,hit.triangleIndex);//TODO COULD be optimized to use triangle index
+				Debug.Log(hit.triangleIndex);
+				waveScript.disturbPoint(hit.point,hit.triangleIndex);
+				//waveScript.disturbRandom();
 			}
 		}
 	}
