@@ -3,12 +3,12 @@ using System.Collections;
 
 public class WavesHandler : MonoBehaviour 
 {
-	private Color[] colorSet1;
-	private Color[] colorSet2;
+	private Vector2[] UVSet1;
+	private Vector2[] UVSet2;
     private Vector2[] newUV;
     private int[] newTriangles;
 	
-	private float dx = 1f;
+	private float dx = 1;
 	private int length = 100;
 	
 	public int xCenter = 0;
@@ -19,6 +19,7 @@ public class WavesHandler : MonoBehaviour
 	//waves vars
 	public float speed = 1f;
 	public float damping = .4f;
+	public float fallOff = 2.0f;//sensitive
 	public float disturbStrength = 1f;
 	private float mk1,mk2,mk3;
 	private float timer;
@@ -32,8 +33,8 @@ public class WavesHandler : MonoBehaviour
 		//creating vertices
 		Vector3[] verts = new Vector3[length*length];
 
-		colorSet1 = new Color[length*length];
-		colorSet2 = new Color[length*length];
+		UVSet1 = new Vector2[length*length];
+		UVSet2 = new Vector2[length*length];
 
 		float halfway = (length-1)*dx*.5f;
 		for(int i = 0; i < length; ++i)
@@ -45,8 +46,8 @@ public class WavesHandler : MonoBehaviour
 				verts[i*length+j] = new Vector3(x,0,z);
 
 				//color values i will pass to the shader via vertex color
-				colorSet1[i*length+j] = new Color(0f,0,0,1);
-				colorSet2[i*length+j] = new Color(0f,0,0,1);
+				UVSet1[i*length+j] = Vector2.zero;
+				UVSet2[i*length+j] = Vector2.zero;
 			}
 		}
 		
@@ -91,14 +92,14 @@ public class WavesHandler : MonoBehaviour
         mesh.vertices = verts;
         mesh.uv = newUV;
         mesh.triangles = newTriangles;
-		mesh.colors = colorSet1;
+		mesh.uv2 = UVSet1;
 		
-		mesh.RecalculateNormals();//TODO - Optimize for a plane
-		solveTangents(mesh);//TODO - Optimize for a plane
+		//mesh.RecalculateNormals();//TODO - Optimize for a plane
+		//solveTangents(mesh);//TODO - Optimize for a plane
 		gameObject.GetComponent<MeshFilter>().mesh = mesh;
 		
 		//waves vars -- KERNEL calculation
-		float d = damping*TIME_STEP+2.0f;
+		float d = damping*TIME_STEP+fallOff;
 		float e = (speed*speed)*(TIME_STEP*TIME_STEP)/(dx*dx);
 		mk1 = (damping*TIME_STEP-2.0f)/ d;
 		mk2 = (4.0f-8.0f*e) / d;
@@ -120,16 +121,16 @@ public class WavesHandler : MonoBehaviour
 			{
 				for(int j = 1; j < length-1; ++j)
 				{
-					colorSet2[i*length+j].r = 
-						mk1*colorSet2[i*length+j].r +
-						mk2*colorSet1[i*length+j].r +
-					  	mk3*(colorSet1[(i+1)*length+j].r + 
-					     	 colorSet1[(i-1)*length+j].r+ 
-						     colorSet1[i*length+j+1].r+  
-					     	 colorSet1[i*length+j-1].r);
+					UVSet2[i*length+j].x = 
+						mk1*UVSet2[i*length+j].x +
+						mk2*UVSet1[i*length+j].x +
+					  	mk3*(UVSet1[(i+1)*length+j].x + 
+					     	 UVSet1[(i-1)*length+j].x+ 
+						     UVSet1[i*length+j+1].x+  
+					     	 UVSet1[i*length+j-1].x);
 				}
 			}
-			mesh.colors = colorSet2;
+			mesh.uv2 = UVSet2;
 		}
 		else
 		{
@@ -138,17 +139,17 @@ public class WavesHandler : MonoBehaviour
 			{
 				for(int j = 1; j < length-1; ++j)
 				{
-					colorSet1[i*length+j].r = 
-						mk1*colorSet1[i*length+j].r  +
-							mk2*colorSet2[i*length+j].r +
-							mk3*(colorSet2[(i+1)*length+j].r + 
-							     colorSet2[(i-1)*length+j].r + 
-							     colorSet2[i*length+j+1].r + 
-							     colorSet2[i*length+j-1].r);
+					UVSet1[i*length+j].x = 
+						mk1*UVSet1[i*length+j].x  +
+							mk2*UVSet2[i*length+j].x +
+							mk3*(UVSet2[(i+1)*length+j].x + 
+							     UVSet2[(i-1)*length+j].x + 
+							     UVSet2[i*length+j+1].x + 
+							     UVSet2[i*length+j-1].x);
 				}
 			}
 
-			mesh.colors = colorSet1;
+			mesh.uv2 = UVSet1;
 		}
 	}
 	
@@ -162,19 +163,19 @@ public class WavesHandler : MonoBehaviour
 
 		if(vertexSet == 1)
 		{
-			colorSet1[i*length+j].r += disturbStrength;
-			colorSet1[i*length+j+1].r += disturbStrength;
-			colorSet1[i*length+j-1].r += disturbStrength;
-			colorSet1[(i+1)*length+j].r += disturbStrength;
-			colorSet1[(i-1)*length+j].r += disturbStrength;
+			UVSet1[i*length+j].x += disturbStrength;
+			UVSet1[i*length+j+1].x += disturbStrength;
+			UVSet1[i*length+j-1].x += disturbStrength;
+			UVSet1[(i+1)*length+j].x += disturbStrength;
+			UVSet1[(i-1)*length+j].x += disturbStrength;
 		}
 		else
 		{
-			colorSet2[i*length+j].r += disturbStrength;
-			colorSet2[i*length+j+1].r += disturbStrength;
-			colorSet2[i*length+j-1].r += disturbStrength;
-			colorSet2[(i+1)*length+j].r += disturbStrength;
-			colorSet2[(i-1)*length+j].r += disturbStrength;
+			UVSet2[i*length+j].x += disturbStrength;
+			UVSet2[i*length+j+1].x += disturbStrength;
+			UVSet2[i*length+j-1].x += disturbStrength;
+			UVSet2[(i+1)*length+j].x += disturbStrength;
+			UVSet2[(i-1)*length+j].x += disturbStrength;
 		}
 	}
 
@@ -189,19 +190,19 @@ public class WavesHandler : MonoBehaviour
 
 		if(vertexSet == 1)
 		{
-			colorSet1[i*length+j].r += disturbStrength;
-			colorSet1[i*length+j+1].r += disturbStrength;
-			colorSet1[i*length+j-1].r += disturbStrength;
-			colorSet1[(i+1)*length+j].r += disturbStrength;
-			colorSet1[(i-1)*length+j].r += disturbStrength;
+			UVSet1[i*length+j].x += disturbStrength;
+			UVSet1[i*length+j+1].x += disturbStrength;
+			UVSet1[i*length+j-1].x += disturbStrength;
+			UVSet1[(i+1)*length+j].x += disturbStrength;
+			UVSet1[(i-1)*length+j].x += disturbStrength;
 		}
 		else
 		{
-			colorSet2[i*length+j].r += disturbStrength;
-			colorSet2[i*length+j+1].r += disturbStrength;
-			colorSet2[i*length+j-1].r += disturbStrength;
-			colorSet2[(i+1)*length+j].r += disturbStrength;
-			colorSet2[(i-1)*length+j].r += disturbStrength;
+			UVSet2[i*length+j].x += disturbStrength;
+			UVSet2[i*length+j+1].x += disturbStrength;
+			UVSet2[i*length+j-1].x += disturbStrength;
+			UVSet2[(i+1)*length+j].x += disturbStrength;
+			UVSet2[(i-1)*length+j].x += disturbStrength;
 		}
 	}
 

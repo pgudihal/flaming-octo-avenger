@@ -14,6 +14,9 @@ public class PlayerInputControl : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(Input.GetKeyDown(KeyCode.Escape))
+			Application.Quit();
+
 		if(Input.GetMouseButton(0))
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -21,7 +24,6 @@ public class PlayerInputControl : MonoBehaviour
 			if (Physics.Raycast(ray, out hit, 1000))
 			{
 				Debug.DrawLine(ray.origin, hit.point);
-				Debug.Log(hit.triangleIndex);
 				waveScript.disturbPoint(hit.point,hit.triangleIndex);
 				//waveScript.disturbRandom();
 			}

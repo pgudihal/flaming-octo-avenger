@@ -29,9 +29,9 @@
 				float4 vertex : POSITION;
 				fixed4 color : COLOR;
 				float2 texcoord : TEXCOORD0;
+				float2 texcoord1 : TEXCOORD1;
 			};
 			
-			//float4 _Ramp_ST;
 			float4 _BGTex_ST;
 
 			v2f vert(appdata_full v)
@@ -40,12 +40,13 @@
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.color = v.color;
 				o.texcoord = TRANSFORM_TEX(v.texcoord,_BGTex);
+				o.texcoord1 = v.texcoord1.xy;
 				return o;
 			}
 			
 			half4 frag (v2f i) : COLOR
 			{ 
-				half4 ramp = tex2D(_Ramp,float2(i.color.r + _Offset,.1));
+				half4 ramp = tex2D(_Ramp,(i.texcoord1) + float2(_Offset,0));
 				half4 finalColor = (tex2D(_BGTex,i.texcoord) + ramp) * _Tint;
 				finalColor.a = 1;
 				return finalColor;
