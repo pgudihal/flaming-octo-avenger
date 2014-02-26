@@ -16,7 +16,13 @@ public class PlayerInputControl : MonoBehaviour
 	{
 		if(Input.GetMouseButton(0))
 		{
-
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit, 1000))
+			{
+				Debug.DrawLine(ray.origin, hit.point);
+				waveScript.disturbPoint(hit.point,hit.triangleIndex);//TODO COULD be optimized to use triangle index
+			}
 		}
 	}
 

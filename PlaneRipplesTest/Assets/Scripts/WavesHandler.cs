@@ -108,7 +108,7 @@ public class WavesHandler : MonoBehaviour
 	void Update () 
 	{	
 		if(Input.GetKeyDown(KeyCode.Space))disturbRandom();
-		
+
 		if(vertexSet == 1)
 		{
 			vertexSet++;//next time use vertex set 2
@@ -125,7 +125,6 @@ public class WavesHandler : MonoBehaviour
 					     	 colorSet1[i*length+j-1].r);
 				}
 			}
-
 			mesh.colors = colorSet2;
 		}
 		else
@@ -176,14 +175,16 @@ public class WavesHandler : MonoBehaviour
 	}
 
 	//automaticly finds the closest vertex when given a world point
-	public void disturbPoint(Vector3 point)
+	public void disturbPoint(Vector3 point, int triangleIndex)
 	{
-		Vector3 vertex = NearestVertexTo(point);
+		Vector3 vertex = NearestVertexTo(point, triangleIndex);
 
 		int j = Mathf.FloorToInt(vertex.x);
 		int i = Mathf.FloorToInt(vertex.z);
-		//Debug.Log("i: " + i + "j: " + j);
-		
+		//clamping
+		j = Mathf.Clamp(j,1,length-1);
+		i = Mathf.Clamp(i,1,length-1);
+
 		if(vertexSet == 1)
 		{
 			colorSet1[i*length+j].r += disturbStrength;
@@ -203,7 +204,8 @@ public class WavesHandler : MonoBehaviour
 	}
 
 	//finds the nearest point on a mesh when given a point in world space
-	private Vector3 NearestVertexTo(Vector3 point)
+	//made to be used with raycast that returns a triangelindex
+	private Vector3 NearestVertexTo(Vector3 point, int triangleIndex)
 	{
 		// convert point to local space
 		point = transform.InverseTransformPoint(point);
@@ -211,10 +213,13 @@ public class WavesHandler : MonoBehaviour
 		Mesh mesh = GetComponent<MeshFilter>().mesh;
 		float minDistanceSqr = Mathf.Infinity;
 		Vector3 nearestVertex = Vector3.zero;
+		Vector3 vertex = Vector3.zero;
 		
-		// scan all vertices to find nearest
-		foreach (Vector3 vertex in mesh.vertices)
+		// scan only the vertices of the triangle hit
+		for (int i = 0; i < 3; i++)
 		{
+			vertex = mesh.vertices[mesh.triangles[triangleIndex*3+i]];
+
 			Vector3 diff = point-vertex;
 			float distSqr = diff.sqrMagnitude;
 			
