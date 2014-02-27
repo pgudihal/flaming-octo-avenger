@@ -34,6 +34,7 @@ public class PlayerInputControl : MonoBehaviour
 				Debug.DrawLine(ray.origin, hit.point);
 				if(Physics.Raycast(ray2,out hit2, 1000)){
 					waveScript.disturbPoint(hit2.point,hit2.triangleIndex);
+					waveScript.disturbPoint(hit.point, hit.triangleIndex);
 				}
 				//waveScript.disturbRandom();
 			}
