@@ -50,8 +50,10 @@
      <Compile Include="Assets\Scripts\MyColor.cs" />
      <Compile Include="Assets\Scripts\PlayerInputControl.cs" />
      <Compile Include="Assets\Scripts\SceneDefaults.cs" />
+     <Compile Include="Assets\Scripts\Swipe Level Building\RecordingPlane.cs" />
      <Compile Include="Assets\Scripts\WavesHandler.cs" />
      <Compile Include="Assets\Scripts\WavesHandlerOriginal.cs" />
+     <None Include="Assets\Shaders\Wireframe.shader" />
      <None Include="Assets\Shaders\WaveColor.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

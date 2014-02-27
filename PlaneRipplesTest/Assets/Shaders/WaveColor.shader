@@ -33,6 +33,7 @@
 			};
 			
 			float4 _BGTex_ST;
+			float4 _Ramp_ST;
 
 			v2f vert(appdata_full v)
 			{
@@ -40,7 +41,8 @@
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.color = v.color;
 				o.texcoord = TRANSFORM_TEX(v.texcoord,_BGTex);
-				o.texcoord1 = v.texcoord1.xy;
+				o.texcoord1 = TRANSFORM_TEX(v.texcoord1,_Ramp);
+				//o.texcoord1 = v.texcoord1.xy;
 				return o;
 			}
 			

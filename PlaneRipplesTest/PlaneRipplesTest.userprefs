@@ -1,10 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerInputControl.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\Wireframe.shader">
     <Files>
-      <File FileName="Assets\Scripts\WavesHandler.cs" Line="39" Column="37" />
-      <File FileName="Assets\Shaders\WaveColor.shader" Line="50" Column="34" />
-      <File FileName="Assets\Scripts\PlayerInputControl.cs" Line="36" Column="45" />
+      <File FileName="Assets\Scripts\WavesHandlerOriginal.cs" Line="106" Column="25" />
+      <File FileName="Assets\Scripts\Swipe Level Building\RecordingPlane.cs" Line="65" Column="19" />
+      <File FileName="Assets\Shaders\Wireframe.shader" Line="48" Column="24" />
+      <File FileName="Assets\Shaders\WaveColor.shader" Line="42" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
