@@ -179,14 +179,14 @@ public class WavesHandler : MonoBehaviour
 		}
 	}
 
-	//automaticly finds the closest vertex when given a world point
+	//automatically finds the closest vertex when given a world point
 	public void disturbPoint(Vector3 point, int triangleIndex)
 	{
 		Vector2 vertex = NearestVertexTo(point, triangleIndex);
 
 		//clamping - dont want to distrub an edge vertex due below
-		int i = Mathf.Clamp((int)vertex.x,1,length-1);
-		int j = Mathf.Clamp((int)vertex.y,1,length-1);
+		int i = Mathf.Clamp((int)vertex.x,1,length-2);
+		int j = Mathf.Clamp((int)vertex.y,1,length-2);
 
 		if(vertexSet == 1)
 		{
