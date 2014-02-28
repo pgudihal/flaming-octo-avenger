@@ -11,7 +11,7 @@ public class RecordingPlane : MonoBehaviour
 
 	private Mesh mesh;
 	private int[] triangles;
-	private Color32 vColors;
+	private Color32[] vColors;
 
 	private Color32 WHITE = new Color32(255,255,255,255);
 	private Color32 BLACK = new Color32(0,0,0,1);
@@ -26,7 +26,7 @@ public class RecordingPlane : MonoBehaviour
 		float halfY = (SegmentsLength-1)*dy*.5f;
 
 		Vector3[] vertices = new Vector3[SegmentsWidth * SegmentsLength];
-		Color32[] vColors = new Color32[SegmentsWidth * SegmentsLength];
+		vColors = new Color32[SegmentsWidth * SegmentsLength];
 
 		for(int i = 0; i < SegmentsLength; ++i)
 		{
@@ -77,12 +77,12 @@ public class RecordingPlane : MonoBehaviour
 		//mesh creation
 		mesh = new Mesh();
 		mesh.vertices = vertices;
-		//mesh.colors32 = vColors;
+		mesh.colors32 = vColors;
 		mesh.uv = UVs;
 		mesh.triangles = triangles;
 		mesh.RecalculateNormals();
 		GetComponent<MeshFilter>().mesh = mesh;
-		//gameObject.AddComponent("MeshCollider");
+		gameObject.AddComponent("MeshCollider");
 	}
 	
 	// Update is called once per frame
@@ -98,10 +98,11 @@ public class RecordingPlane : MonoBehaviour
 		if (collider.Raycast (ray, out hit, 1000.0f)) 
 		{
 			Debug.DrawLine (ray.origin, hit.point);
-//			vColors[triangles[hit.triangleIndex*3    ]];
-//			vColors[triangles[hit.triangleIndex*3 + 1]] = BLACK;
-//			vColors[triangles[hit.triangleIndex*3 + 2]] = BLACK;
+			vColors[triangles[hit.triangleIndex*3    ]] = BLACK;
+			vColors[triangles[hit.triangleIndex*3 + 1]] = BLACK;
+			vColors[triangles[hit.triangleIndex*3 + 2]] = BLACK;
 		}
+		mesh.colors32 = vColors;
 	}
 
 }

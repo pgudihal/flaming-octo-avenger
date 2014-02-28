@@ -51,9 +51,9 @@
 				half lx = step(_LineWidth, i.wireUVs.x);
 				half ly = step(_LineWidth, i.wireUVs.y);
 				half hx = step(i.wireUVs.x, 1.0 - _LineWidth);
-				half hy = step(i.wireUVs.y, 1.0 - _LineWidth); 
+				half hy = step(i.wireUVs.y, 1.0 - _LineWidth);
 
-				return lerp(_LineColor,_BGColor * tex2D(_MainTexture,i.texcoord) * i.color, lx*ly*hx*hy);
+				return lerp(_LineColor,_BGColor * tex2D(_MainTexture,i.texcoord) * (1-step(i.color,0)), lx*ly*hx*hy);
 			}		
 			
 		ENDCG
