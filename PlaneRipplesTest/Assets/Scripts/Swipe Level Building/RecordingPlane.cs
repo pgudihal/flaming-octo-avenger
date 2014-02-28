@@ -10,6 +10,11 @@ public class RecordingPlane : MonoBehaviour
 
 
 	private Mesh mesh;
+	private int[] triangles;
+	private Color32 vColors;
+
+	private Color32 WHITE = new Color32(255,255,255,255);
+	private Color32 BLACK = new Color32(0,0,0,1);
 	// Use this for initialization
 	void Start () 
 	{
@@ -21,6 +26,7 @@ public class RecordingPlane : MonoBehaviour
 		float halfY = (SegmentsLength-1)*dy*.5f;
 
 		Vector3[] vertices = new Vector3[SegmentsWidth * SegmentsLength];
+		Color32[] vColors = new Color32[SegmentsWidth * SegmentsLength];
 
 		for(int i = 0; i < SegmentsLength; ++i)
 		{
@@ -29,13 +35,14 @@ public class RecordingPlane : MonoBehaviour
 			{
 				float x = -halfX + j*dx;
 				vertices[i*SegmentsWidth+j] = new Vector3(x,0,y);
+				vColors[i*SegmentsWidth+j] = WHITE;
 			}
 		}
 
 		//creating triangles
 		int faces = (SegmentsWidth-1)*(SegmentsLength-1)*2;
 		int indices = faces*3;
-		int[] triangles = new int[indices];
+		triangles = new int[indices];
 		int k = 0;
 		for(int i = 0; i < SegmentsLength-1; ++i)
 		{
@@ -70,13 +77,31 @@ public class RecordingPlane : MonoBehaviour
 		//mesh creation
 		mesh = new Mesh();
 		mesh.vertices = vertices;
+		//mesh.colors32 = vColors;
 		mesh.uv = UVs;
 		mesh.triangles = triangles;
+		mesh.RecalculateNormals();
 		GetComponent<MeshFilter>().mesh = mesh;
+		//gameObject.AddComponent("MeshCollider");
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		if(Input.GetMouseButton(0)) recordHitPosition();
 	}
+
+	private void recordHitPosition()
+	{
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit hit;
+		if (collider.Raycast (ray, out hit, 1000.0f)) 
+		{
+			Debug.DrawLine (ray.origin, hit.point);
+//			vColors[triangles[hit.triangleIndex*3    ]];
+//			vColors[triangles[hit.triangleIndex*3 + 1]] = BLACK;
+//			vColors[triangles[hit.triangleIndex*3 + 2]] = BLACK;
+		}
+	}
+
 }
