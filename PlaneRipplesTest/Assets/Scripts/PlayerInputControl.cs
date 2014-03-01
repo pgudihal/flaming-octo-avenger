@@ -6,6 +6,7 @@ public class PlayerInputControl : MonoBehaviour
 	private WavesHandler waveScript;
 	private GameObject playerObj;
 	public GameObject defaultObj;
+	private bool control = false;
 
 	// Use this for initialization
 	void Start () 
@@ -19,8 +20,9 @@ public class PlayerInputControl : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Escape))
 			Application.Quit();
-
-		if(Input.GetMouseButton(0) || !defaultObj.rigidbody.IsSleeping())
+		if (Input.GetMouseButtonDown (0))
+			control = !control;
+		if(control)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			Vector3 trailingPos = Camera.main.WorldToScreenPoint(defaultObj.transform.position);

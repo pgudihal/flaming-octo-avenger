@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{33BA9826-3A48-AED8-2D74-692088726494}</ProjectGuid>
+	<ProjectGuid>{81C549CC-B6B3-DA4B-774C-85FE3BD8C3A1}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-UnityScript</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,14 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\HUDFPS.cs" />
-     <Compile Include="Assets\Scripts\MyColor.cs" />
-     <Compile Include="Assets\Scripts\PlayerInputControl.cs" />
-     <Compile Include="Assets\Scripts\SceneDefaults.cs" />
-     <Compile Include="Assets\Scripts\Swipe Level Building\RecordingPlane.cs" />
-     <Compile Include="Assets\Scripts\WavesHandler.cs" />
-     <Compile Include="Assets\Scripts\WavesHandlerOriginal.cs" />
-     <Compile Include="Assets\Scripts\randomMovement.cs" />
+     <Compile Include="Assets\RandomMovement.js" />
      <None Include="Assets\Shaders\WireframeSolid.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
      <None Include="Assets\Shaders\WaveColor.shader" />
