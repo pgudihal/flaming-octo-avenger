@@ -41,7 +41,7 @@
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.texcoord = TRANSFORM_TEX(v.texcoord,_MainTexture);
 				o.color = v.color;
-				o.wireUVs = v.texcoord;
+				o.wireUVs = v.texcoord1;
 				return o;
 			}
 			
