@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class RecordingPlane : MonoBehaviour 
 {
@@ -22,6 +23,8 @@ public class RecordingPlane : MonoBehaviour
 	private Stack<int> tempQ = new Stack<int>();
 	private Stack<int> record = new Stack<int>();
 	private int lastPush;//counts how many points were added to the record last mouse down
+	public static Vector3 END_SWIPE = new Vector3(0,-100,100);//put inbetween swipes when saving
+	public static int END_SWIPE_INDEX = -1; //put inbetween swipes when pushing on to record
 
 
 	private string sessionName = "";
@@ -117,14 +120,18 @@ public class RecordingPlane : MonoBehaviour
 			return;
 		}
 
-		if (GUI.Button(new Rect(10, 10, 200, 20), "Save Session " + sessionName))
+		if (GUI.Button(new Rect(Screen.width-240, 10, 230, 20), "Save Session " + sessionName))
 			saveLevel();
+
+		if(GUI.Button(new Rect(10,10,50,20),"Clear"))
+			clear();
 	}
 
 	private void readHitPosition()
 	{
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
+
 		if (collider.Raycast (ray, out hit, 1000.0f)) 
 		{
 			Debug.DrawLine (ray.origin, hit.point);
@@ -141,6 +148,7 @@ public class RecordingPlane : MonoBehaviour
 	private void recordHitPosition()
 	{
 		lastPush = tempQ.Count;
+		record.Push(END_SWIPE_INDEX);
 		while(tempQ.Count > 0)
 			record.Push(tempQ.Pop());
 	}
@@ -155,19 +163,42 @@ public class RecordingPlane : MonoBehaviour
 
 	private void undo()
 	{
-		while(--lastPush > 0)
+		while(lastPush > 0)
 		{
 			int triangleIndex = record.Pop();
 			vColors[triangles[triangleIndex*3    ]] = WHITE;
 			vColors[triangles[triangleIndex*3 + 1]] = WHITE;
 			vColors[triangles[triangleIndex*3 + 2]] = WHITE;
+
+			lastPush--;
 		}
+
+		record.Pop();//getting rid of END_SWIPE_INDEX
 
 		mesh.colors32 = vColors;
 	}
 
+	private void clear()
+	{
+		for(int i = 0; i < vColors.Length;i++)
+			vColors[i] = WHITE;
+		mesh.colors32 = vColors;
+
+		tempQ.Clear();
+		record.Clear();
+		lastPush = 0;
+	}
+
+	private int saveCount = 0;
 	private void saveLevel()
 	{
+		string fileName = sessionName + (saveCount++) + ".swipe";
+		string path = "Assets\\Resources\\SwipeSessions\\" + sessionName + "\\" + fileName;
+
+
+
+		System.IO.FileStream fs = File.Create(path);
+		//string output = "Hello World " + sessionName;
 	}
 
 	private Vector3 vectorMidpoint(Vector3 a,Vector3 b)
