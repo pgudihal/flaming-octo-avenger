@@ -20,14 +20,15 @@ public class RecordingPlane : MonoBehaviour
 	private Color32 BLACK = new Color32(0,0,0,1);
 
 	//info is that is kept in tempQ can be undone, it keeps triangle indeces
+	//Also this is stupid and I dont need two stacks but i dont feel like redoing it
 	private Stack<int> tempQ = new Stack<int>();
 	private Stack<int> record = new Stack<int>();
+	private SwipeSession session;
 	private int lastPush;//counts how many points were added to the record last mouse down
 	public static Vector3 END_SWIPE = new Vector3(0,-100,100);//put inbetween swipes when saving
 	public static int END_SWIPE_INDEX = -1; //put inbetween swipes when pushing on to record
 
-
-	private string sessionName = "";
+	
 	void Start () 
 	{
 		float dx = Width/(float)SegmentsWidth;
@@ -103,25 +104,41 @@ public class RecordingPlane : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(!hasSessionStarted) return;
 		if(Input.GetMouseButton(0)) readHitPosition();
 		if(Input.GetMouseButtonUp(0)) recordHitPosition();
 		if(Input.GetKeyDown(KeyCode.Space)) undo();
 	}
 
 	string tempString = "Enter Session Name";
+	bool hasSessionStarted = false;
 	void OnGUI()
 	{
-		if(sessionName == "")
+		if(!hasSessionStarted)
 		{
 			tempString = GUI.TextField(new Rect(10, 10, 200, 20), tempString, 25);
 
 			if (GUI.Button(new Rect(220, 10, 50, 20), "Enter"))
-				if(tempString != "" && tempString != "Enter Session Name") sessionName = tempString;
+			{
+				if(tempString != "" && tempString != "Enter Session Name") 
+				{
+					hasSessionStarted = true;
+					session = ScriptableObject.CreateInstance<SwipeSession>();
+					session.name = tempString;
+				}
+			}
 			return;
 		}
 
-		if (GUI.Button(new Rect(Screen.width-240, 10, 230, 20), "Save Session " + sessionName))
+		if (GUI.Button(new Rect(Screen.width-240, 10, 230, 20), "Save Level"))
 			saveLevel();
+
+		if (GUI.Button(new Rect(Screen.width-350, Screen.height-30, 300, 20), "Save and Write Session"))
+		{
+			saveAndWriteSession();
+			hasSessionStarted = false;
+			tempString = "Enter Session Name";
+		}
 
 		if(GUI.Button(new Rect(10,10,50,20),"Clear"))
 			clear();
@@ -152,10 +169,12 @@ public class RecordingPlane : MonoBehaviour
 		while(tempQ.Count > 0)
 			record.Push(tempQ.Pop());
 	}
-
+	
 	private Vector3 findTriangleCenter(int triangleIndex)
 	{
-		//calculation only works on a triangle with 3 equal sides
+		if(triangleIndex < 0)
+			return RecordingPlane.END_SWIPE;
+
 		return vectorMidpoint(
 			vectorMidpoint(vertices[triangles[triangleIndex*3    ]], vertices[triangles[triangleIndex*3 + 1]]),
 			vectorMidpoint(vertices[triangles[triangleIndex*3    ]], vertices[triangles[triangleIndex*3 + 2]]));
@@ -189,16 +208,24 @@ public class RecordingPlane : MonoBehaviour
 		lastPush = 0;
 	}
 
-	private int saveCount = 0;
+	private void saveAndWriteSession()
+	{
+		CustomAssetUtility.CreateAssetAtPath("SwipeSessions",session.name,session);
+
+		session = null;
+		clear();
+	}
+
 	private void saveLevel()
 	{
-		string fileName = sessionName + (saveCount++) + ".swipe";
-		string path = "Assets\\Resources\\SwipeSessions\\" + sessionName + "\\" + fileName;
 
+		Vector3[] lvlData = new Vector3[record.Count];
 
+		for(int i = 0; i < lvlData.Length;i++)
+			lvlData[i] = findTriangleCenter(record.Pop());
 
-		System.IO.FileStream fs = File.Create(path);
-		//string output = "Hello World " + sessionName;
+		session.levels.Add(lvlData);
+		clear();
 	}
 
 	private Vector3 vectorMidpoint(Vector3 a,Vector3 b)
