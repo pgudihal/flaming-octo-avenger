@@ -124,7 +124,7 @@ public class RecordingPlane : MonoBehaviour
 				{
 					hasSessionStarted = true;
 					session = ScriptableObject.CreateInstance<SwipeSession>();
-					session.name = tempString;
+					session.sessionName = tempString;
 				}
 			}
 			return;
@@ -210,10 +210,9 @@ public class RecordingPlane : MonoBehaviour
 
 	private void saveAndWriteSession()
 	{
-		CustomAssetUtility.CreateAssetAtPath("SwipeSessions",session.name,session);
+		saveLevel();
 
-		session = null;
-		clear();
+		CustomAssetUtility.CreateAssetAtPath("SwipeSessions",session.sessionName,session);
 	}
 
 	private void saveLevel()
@@ -224,7 +223,7 @@ public class RecordingPlane : MonoBehaviour
 		for(int i = 0; i < lvlData.Length;i++)
 			lvlData[i] = findTriangleCenter(record.Pop());
 
-		session.levels.Add(lvlData);
+		session.levels.Add(new LevelWrapper(lvlData));
 		clear();
 	}
 
