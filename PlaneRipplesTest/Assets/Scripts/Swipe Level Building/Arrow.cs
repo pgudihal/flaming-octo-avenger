@@ -11,6 +11,8 @@ public class Arrow : MonoBehaviour
 	private Arrow previousArrow;
 	private Transform nextArrow;
 
+	private bool isLookingAt = false;
+
 	private Arrow(bool isOnBoard)
 	{
 		this.isOnBoard = isOnBoard;
@@ -21,7 +23,16 @@ public class Arrow : MonoBehaviour
 		manager = transform.parent.gameObject.GetComponent<ArrowManager>();
 		renderer.enabled = false;
 		collider.enabled = false;
-		nextArrow = null;
+	}
+
+	void Update()
+	{
+		if(!isLookingAt)
+	   	{
+			isLookingAt = true;
+			if(nextArrow != null)
+				transform.LookAt(nextArrow);
+		}
 	}
 
 	public void initialize(Transform nextArrow)
@@ -36,29 +47,24 @@ public class Arrow : MonoBehaviour
 		transform.position = pos;
 		renderer.enabled = true;
 		collider.enabled = true;
+		isOnBoard = true;
 		this.previousArrow = previousArrow;
 
-		if(nextArrow != null)
-			transform.LookAt(nextArrow);
+		isLookingAt = false;
+	}
+
+	public void setup(Vector3 pos)
+	{
+		setup(pos,null);
 	}
 
 	public void hit()
 	{
-		if(previousArrow.IsOnBoard) return;
+		if(previousArrow != null && previousArrow.IsOnBoard) return;
 
 		manager.arrowReturned();
 		renderer.enabled = false;
-		renderer.enabled = false;
+		collider.enabled = false;
 		isOnBoard = false;
-	}
-
-	public void setSpecial()
-	{
-		isOnBoard = false;
-	}
-
-	public static Arrow InitialPreviousArrow()
-	{
-		return new Arrow(false);
 	}
 }

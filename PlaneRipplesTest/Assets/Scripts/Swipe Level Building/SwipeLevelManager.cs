@@ -15,7 +15,7 @@ public class SwipeLevelManager : MonoBehaviour
 	void Start () 
 	{
 		currentLvlPositions = sessions[currentSession].levels[currentSessionLvl].levelData;
-		LoadNextLevel();
+		loadCurrentLevel();
 	}
 	
 	// Update is called once per frame

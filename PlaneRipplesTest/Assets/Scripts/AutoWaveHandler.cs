@@ -186,8 +186,8 @@ public class AutoWaveHandler : MonoBehaviour
 		Vector2 vertex = NearestVertexTo(point, triangleIndex);
 		
 		//clamping - dont want to distrub an edge vertex due below
-		int i = Mathf.Clamp((int)vertex.x,1,length-2);
-		int j = Mathf.Clamp((int)vertex.y,1,length-2);
+		int i = Mathf.Clamp((int)vertex.x,2,length-2);
+		int j = Mathf.Clamp((int)vertex.y,2,length-2);
 		
 		if(vertexSet == 1)
 		{
