@@ -64,10 +64,12 @@ public class ArrowManager : MonoBehaviour
 		{
 			if(positions[i] == RecordingPlane.END_SWIPE)
 			{
+				if(previous != null) previous.setAsEndArrow();
 				previous = null;
 			}
 			else
 			{
+				//testing to make sure arrows are spaced evenly
 				if(Vector3.Distance(arrows[activeArrowCount-1].transform.position,
 				                    positions[i] + heightOffset) > minDistance)
 				{

@@ -4,6 +4,8 @@ using System.Collections;
 public class Arrow : MonoBehaviour 
 {
 	public bool IsOnBoard {get{return isOnBoard;}}
+	public Material ArrowMat;
+	public Material EndMat;
 
 	private ArrowManager manager;
 
@@ -11,7 +13,9 @@ public class Arrow : MonoBehaviour
 	private Arrow previousArrow;
 	private Transform nextArrow;
 
+	//used so that on the first update this arrow will look at its next arrow
 	private bool isLookingAt = false;
+	private bool isUsingEndMat = false;
 
 	private Arrow(bool isOnBoard)
 	{
@@ -40,6 +44,12 @@ public class Arrow : MonoBehaviour
 		this.nextArrow = nextArrow;
 	}
 
+	public void setAsEndArrow()
+	{
+		isUsingEndMat = true;
+		renderer.material = EndMat;
+	}
+
 	//previous is to tell this arrow which came before it.
 	//this arrow can only be hit if the one before it was hit prior
 	public void setup(Vector3 pos, Arrow previousArrow)
@@ -51,6 +61,11 @@ public class Arrow : MonoBehaviour
 		this.previousArrow = previousArrow;
 
 		isLookingAt = false;
+		if(isUsingEndMat)
+		{
+			renderer.material = ArrowMat;
+			isUsingEndMat = false;
+		}
 	}
 
 	public void setup(Vector3 pos)
@@ -60,7 +75,7 @@ public class Arrow : MonoBehaviour
 
 	public void hit()
 	{
-		if(previousArrow != null && previousArrow.IsOnBoard) return;
+		if(!isOnBoard || (previousArrow != null && previousArrow.IsOnBoard)) return;
 
 		manager.arrowReturned();
 		renderer.enabled = false;
