@@ -4,6 +4,7 @@ using System.Collections;
 public class Arrow : MonoBehaviour 
 {
 	public bool IsOnBoard {get{return isOnBoard;}}
+	public bool IsEndingArrow{get{return isUsingEndMat;}}
 	public Material ArrowMat;
 	public Material EndMat;
 
@@ -73,13 +74,15 @@ public class Arrow : MonoBehaviour
 		setup(pos,null);
 	}
 
-	public void hit()
+	//return true if its a valid hit
+	public bool hit()
 	{
-		if(!isOnBoard || (previousArrow != null && previousArrow.IsOnBoard)) return;
+		if(!isOnBoard || (previousArrow != null && previousArrow.IsOnBoard)) return false;
 
 		manager.arrowReturned();
 		renderer.enabled = false;
 		collider.enabled = false;
 		isOnBoard = false;
+		return true;
 	}
 }

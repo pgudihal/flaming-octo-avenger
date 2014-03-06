@@ -50,8 +50,10 @@
      <Compile Include="Assets\Scripts\HUDFPS.cs" />
      <Compile Include="Assets\Scripts\PlayerInputControl.cs" />
      <Compile Include="Assets\Scripts\SceneDefaults.cs" />
+     <Compile Include="Assets\Scripts\ScoreKeeper.cs" />
      <Compile Include="Assets\Scripts\Swipe Level Building\Arrow.cs" />
      <Compile Include="Assets\Scripts\Swipe Level Building\ArrowManager.cs" />
+     <Compile Include="Assets\Scripts\Swipe Level Building\Countdown.cs" />
      <Compile Include="Assets\Scripts\Swipe Level Building\CustomAssetUtility.cs" />
      <Compile Include="Assets\Scripts\Swipe Level Building\LevelWrapper.cs" />
      <Compile Include="Assets\Scripts\Swipe Level Building\RecordingPlane.cs" />
