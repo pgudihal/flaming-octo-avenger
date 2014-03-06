@@ -54,8 +54,16 @@
 			}
 			
 			half4 frag (v2f i) : COLOR
-			{ 
-				return half4(0,0,0,1);
+			{
+				fixed4 fastLavaColor = _FastLavaColor *
+					tex2D(_FastLavaTex,i.texcoord*float2(2,4) + float2(-.4,.15)*_Time.y).r;
+				fixed4 fastLavaBase = tex2D(_BrightLavaTex,i.texcoord*float2(1,2) + float2(-.35,.1)*_Time.y);
+				
+				fixed4 slowLavaFire = 
+				
+				half4 finalColor  = fastLavaColor + fastLavaBase;
+				finalColor.a = 1; 
+				return finalColor;
 			}		
 			
 		ENDCG

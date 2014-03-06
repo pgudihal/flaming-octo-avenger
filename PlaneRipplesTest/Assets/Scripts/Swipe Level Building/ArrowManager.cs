@@ -47,7 +47,7 @@ public class ArrowManager : MonoBehaviour
 	{
 		return activeArrowCount == 0;
 	}
-
+	public static Vector3 END_SWIPE = new Vector3(0,-100,100);
 	public bool setUpArrows(Vector3[] positions, Vector3 heightOffset)
 	{
 		if(positions.Length > arrowCount)
@@ -62,7 +62,7 @@ public class ArrowManager : MonoBehaviour
 
 		for(int i = 1; i < positions.Length; i++)
 		{
-			if(positions[i] == RecordingPlane.END_SWIPE)
+			if(positions[i] == END_SWIPE)
 			{
 				if(previous != null) previous.setAsEndArrow();
 				previous = null;

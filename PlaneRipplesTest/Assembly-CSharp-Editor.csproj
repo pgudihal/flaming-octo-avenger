@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{33BA9826-3A48-AED8-2D74-692088726494}</ProjectGuid>
+	<ProjectGuid>{E40FBF1D-129A-5861-F691-963A15F812F6}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-CSharp-Editor</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,24 +46,34 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AutoWaveHandler.cs" />
-     <Compile Include="Assets\Scripts\HUDFPS.cs" />
-     <Compile Include="Assets\Scripts\PlayerInputControl.cs" />
-     <Compile Include="Assets\Scripts\SceneDefaults.cs" />
-     <Compile Include="Assets\Scripts\ScoreKeeper.cs" />
-     <Compile Include="Assets\Scripts\Swipe Level Building\Arrow.cs" />
-     <Compile Include="Assets\Scripts\Swipe Level Building\ArrowManager.cs" />
-     <Compile Include="Assets\Scripts\Swipe Level Building\Countdown.cs" />
-     <Compile Include="Assets\Scripts\Swipe Level Building\LevelWrapper.cs" />
-     <Compile Include="Assets\Scripts\Swipe Level Building\SwipeLevelManager.cs" />
-     <Compile Include="Assets\Scripts\Swipe Level Building\SwipeSession.cs" />
-     <Compile Include="Assets\Scripts\WavesHandler.cs" />
-     <Compile Include="Assets\Scripts\WavesHandlerOriginal.cs" />
-     <Compile Include="Assets\Scripts\randomMovement.cs" />
+     <Compile Include="Assets\Editor\CustomAssetUtility.cs" />
+     <Compile Include="Assets\Editor\RecordingPlane.cs" />
      <None Include="Assets\Shaders\WireframeSolid.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
      <None Include="Assets\Shaders\Lava.shader" />
      <None Include="Assets\Shaders\WaveColor.shader" />
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:\Program Files (x86)\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions">
+ <HintPath>C:\Program Files (x86)\Unity\Editor\Data\PlaybackEngines\iPhonePlayer\EditorExtensions\UnityEditor.iOS.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.WP8.Extensions">
+ <HintPath>C:\Program Files (x86)\Unity\Editor\Data\PlaybackEngines\WP8Support\EditorExtensions\UnityEditor.WP8.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Metro.Extensions">
+ <HintPath>C:\Program Files (x86)\Unity\Editor\Data\PlaybackEngines\MetroSupport\EditorExtensions\UnityEditor.Metro.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.BB10.Extensions">
+ <HintPath>C:\Program Files (x86)\Unity\Editor\Data\PlaybackEngines\BB10Player\EditorExtensions\UnityEditor.BB10.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Android.Extensions">
+ <HintPath>C:\Program Files (x86)\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\EditorExtensions\UnityEditor.Android.Extensions.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{33BA9826-3A48-AED8-2D74-692088726494}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
