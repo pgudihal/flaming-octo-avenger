@@ -50,20 +50,24 @@
 				o.color = v.color;
 				o.texcoord = TRANSFORM_TEX(v.texcoord,_FastLavaTex);
 				o.texcoord1 = v.texcoord1.xy;
+				o.vertex.y += min(.1,o.texcoord1.x);
 				return o;
 			}
 			
-			half4 frag (v2f i) : COLOR
+			fixed4 frag (v2f i) : COLOR
 			{
 				fixed4 fastLavaColor = _FastLavaColor *
-					tex2D(_FastLavaTex,i.texcoord*float2(2,4) + float2(-.4,.15)*_Time.y).r;
-				fixed4 fastLavaBase = tex2D(_BrightLavaTex,i.texcoord*float2(1,2) + float2(-.35,.1)*_Time.y);
+					tex2D(_FastLavaTex,i.texcoord*float2(2,4) + float2(-.15,.4)*_Time.y).r;
+				fixed4 fastLavaBase = tex2D(_BrightLavaTex,i.texcoord*float2(1,2) + float2(-.08,.35)*_Time.y);
 				
-				fixed4 slowLavaFire = 
+				fixed4 slowLavaColor = tex2D(_FireTex,i.texcoord*float2(1,2) + float2(-.05,.2)*_Time.y);
+				fixed4 slowLavaBase = tex2D(_DarkLavaTex,i.texcoord*float2(1,2.5) + float2(-.02,.13)*_Time.y);
 				
-				half4 finalColor  = fastLavaColor + fastLavaBase;
-				finalColor.a = 1; 
-				return finalColor;
+				fixed4 lavaLerp = lerp(fastLavaColor+fastLavaBase,slowLavaColor, pow(1-slowLavaColor.g,_FastLavaExp));
+				
+				return lerp(lavaLerp,slowLavaBase,i.texcoord1.x);
+//				half4 finalColor  = half4(1,1,1,1) * lavaLerp;
+//				finalColor.a = 1; 
 			}		
 			
 		ENDCG
