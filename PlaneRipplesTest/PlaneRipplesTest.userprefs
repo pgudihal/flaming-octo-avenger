@@ -1,11 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Swipe Level Building\SwipeLevelManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\WaveColor.shader">
     <Files>
-      <File FileName="Assets\Scripts\Swipe Level Building\Countdown.cs" Line="24" Column="36" />
-      <File FileName="Assets\Scripts\Swipe Level Building\SwipeLevelManager.cs" Line="119" Column="31" />
-      <File FileName="Assets\Scripts\ScoreKeeper.cs" Line="90" Column="3" />
-      <File FileName="Assets\Scripts\Swipe Level Building\Arrow.cs" Line="69" Column="4" />
+      <File FileName="Assets\Shaders\Lava.shader" Line="58" Column="27" />
+      <File FileName="Assets\Shaders\WaveColor.shader" Line="45" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

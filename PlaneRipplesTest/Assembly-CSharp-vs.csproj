@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\randomMovement.cs" />
      <None Include="Assets\Shaders\WireframeSolid.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
+     <None Include="Assets\Shaders\Lava.shader" />
      <None Include="Assets\Shaders\WaveColor.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
