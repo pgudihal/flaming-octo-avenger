@@ -23,6 +23,12 @@ public class HUDFPS : MonoBehaviour
 	
 	void Start()
 	{
+		if(!Application.isEditor)
+		{
+			this.enabled = false;
+			return;
+		}
+
 		if( !guiText )
 		{
 			Debug.Log("UtilityFramesPerSecond needs a GUIText component!");

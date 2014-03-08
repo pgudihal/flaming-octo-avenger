@@ -1,6 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\WaveColor.shader">
+    <Files>
+      <File FileName="Assets\Editor\RecordingPlane.cs" Line="49" Column="1" />
+      <File FileName="Assets\Shaders\WaveColor.shader" Line="55" Column="7" />
+      <File FileName="Assets\Scripts\AutoWaveHandler.cs" Line="146" Column="19" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

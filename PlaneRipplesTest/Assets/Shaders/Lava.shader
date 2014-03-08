@@ -7,7 +7,7 @@
 		_FireTex("Fire Texture",2D) = "white" {}
 		_DarkLavaTex("Dark Lava Texture",2D) = "white" {}
 		
-		_Offset("Wave Offset",Range(0,1)) = 0
+		_Offset("Wave Offset",float) = 0
 	}
 	SubShader 
 	{
@@ -50,7 +50,7 @@
 				o.color = v.color;
 				o.texcoord = TRANSFORM_TEX(v.texcoord,_FastLavaTex);
 				o.texcoord1 = v.texcoord1.xy;
-				o.vertex.y += min(.1,o.texcoord1.x);
+				o.vertex.y += min(.08,o.texcoord1.x) - .04;
 				return o;
 			}
 			
@@ -64,10 +64,12 @@
 				fixed4 slowLavaBase = tex2D(_DarkLavaTex,i.texcoord*float2(1,2.5) + float2(-.02,.13)*_Time.y);
 				
 				fixed4 lavaLerp = lerp(fastLavaColor+fastLavaBase,slowLavaColor, pow(1-slowLavaColor.g,_FastLavaExp));
+				//fixed4 lavaLerp = lerp(fastLavaColor+fastLavaBase,slowLavaColor, 0);
 				
-				return lerp(lavaLerp,slowLavaBase,i.texcoord1.x);
-//				half4 finalColor  = half4(1,1,1,1) * lavaLerp;
-//				finalColor.a = 1; 
+				//fixed4 finalColor = lavaLerp * slowLavaBase;
+				fixed4 finalColor = lerp(slowLavaBase,lavaLerp,saturate(i.texcoord1.x*_Offset)); 
+				finalColor.a = 1;
+				return finalColor;
 			}		
 			
 		ENDCG

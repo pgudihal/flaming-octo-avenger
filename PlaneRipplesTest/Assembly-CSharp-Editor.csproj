@@ -50,6 +50,7 @@
      <Compile Include="Assets\Editor\RecordingPlane.cs" />
      <None Include="Assets\Shaders\WireframeSolid.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
+     <None Include="Assets\Shaders\GridBackground.shader" />
      <None Include="Assets\Shaders\Lava.shader" />
      <None Include="Assets\Shaders\WaveColor.shader" />
  <Reference Include="UnityEditor.Graphs">

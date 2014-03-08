@@ -1,8 +1,8 @@
-﻿Shader "Custom/WaveColor" {
+﻿Shader "Custom/GridBackground" {
 	Properties 
 	{
 		_Tint ("Tint", Color) = (.5,.5,.5,1)
-		_BGTex ("Background Texture",2D) = "black"{}
+		_BGTex ("GlowWeb GreyPack",2D) = "black"{}
 		_Ramp ("Ramp Texture",2D) = "white"{}
 		_Offset("Ramp Offest",Range(0,1)) = 0
 	}
@@ -46,13 +46,18 @@
 				return o;
 			}
 			
-			half4 frag (v2f i) : COLOR
-			{ 
-				half4 ramp = tex2D(_Ramp,(i.texcoord1) + float2(_Offset,0));
-				half4 finalColor = (tex2D(_BGTex,i.texcoord) + ramp) * _Tint;
-				finalColor.a = 1;
-				return finalColor;
-				//return half4(0,0,0,1);
+			fixed4 frag (v2f i) : COLOR
+			{
+				fixed gridH = tex2D(_BGTex,i.texcoord + fixed2(-.04,.04)*_Time.y).r;
+				fixed gridV = tex2D(_BGTex,i.texcoord + fixed2(-.04,.04)*_Time.y).g;
+				fixed hAccents = tex2D(_BGTex,i.texcoord + fixed2(.15,.04)*_Time.y).b;
+				fixed vAccents = tex2D(_BGTex,i.texcoord + fixed2(-.04,-.23)*_Time.y).a; 
+				hAccents = (1-step(gridH,.06)) * hAccents; 
+				vAccents = (1-step(gridV,.05)) * vAccents;
+				
+				//return tex2D(_BGTex,i.texcoord);
+				return fixed4(0,1,0,1) * (gridH + gridV + hAccents + vAccents);
+				
 			}		
 			
 		ENDCG
