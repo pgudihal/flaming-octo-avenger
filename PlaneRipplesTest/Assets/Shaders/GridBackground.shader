@@ -50,10 +50,8 @@
 				hAccents = (1-step(gridHV.r,.054)) * hAccents; 
 				vAccents = (1-step(gridHV.g,.05)) * vAccents;
 //				fixed4 bg = fixed4(0,1,0,1) * (gridHV.r + gridHV.g + hAccents + vAccents);
-//				
-//				fixed4 ramp = tex2D(_Ramp,(i.texcoord1));
 				
-				return fixed4(0,1,0,1) * (gridHV.r + gridHV.g + hAccents + vAccents) + tex2D(_Ramp,i.texcoord1);
+				return fixed4(0,1,0,1) * (gridHV.r + gridHV.g + hAccents + vAccents) + tex2D(_Ramp,i.texcoord1 + fixed2(0,frac(i.texcoord.y*6)));
 			}		
 			
 		ENDCG

@@ -1,12 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\GridBackground.shader">
     <Files>
-      <File FileName="Assets\Shaders\GridBackground.shader" Line="63" Column="2" />
-      <File FileName="Assets\Shaders\GridBackground.shader" Line="41" Column="46" />
+      <File FileName="Assets\Shaders\GridBackground.shader" Line="54" Column="130" />
+      <File FileName="Assets\Shaders\GridBackground.shader" Line="61" Column="2" />
       <File FileName="Assets\Scripts\AutoWaveHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\SceneDefaults.cs" Line="15" Column="1" />
-      <File FileName="Assets\Shaders\Lava.shader" Line="53" Column="5" />
+      <File FileName="Assets\Scripts\SceneDefaults.cs" Line="1" Column="1" />
+      <File FileName="Assets\Shaders\Lava.shader" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
