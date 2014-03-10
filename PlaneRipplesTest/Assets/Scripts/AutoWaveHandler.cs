@@ -22,7 +22,7 @@ public class AutoWaveHandler : MonoBehaviour
 	private float timer;
 	private const float TIME_STEP = 0.03323326f;//MADE TO RUN AT 30FPS
 	private float timeTillNextUpdate;
-	
+
 	void Start () 
 	{
 		//creating vertices
@@ -237,10 +237,13 @@ public class AutoWaveHandler : MonoBehaviour
 	public void disturbPoint(Vector3 point, int triangleIndex)
 	{
 		Vector2 vertex = NearestVertexTo(point, triangleIndex);
-		
-		//clamping - dont want to distrub an edge vertex due below
-		int i = Mathf.Clamp((int)vertex.x,2,SegmentsLength-2);
-		int j = Mathf.Clamp((int)vertex.y,2,SegmentsWidth-2);
+
+		int i = (int)vertex.x;
+		int j = (int)vertex.y;
+
+//		//clamping - dont want to distrub an edge vertex due below
+//		int i = Mathf.Clamp((int)vertex.x,2,SegmentsLength-2);
+//		int j = Mathf.Clamp((int)vertex.y,2,SegmentsWidth-2);
 		
 		if(vertexSet == 1)
 		{
