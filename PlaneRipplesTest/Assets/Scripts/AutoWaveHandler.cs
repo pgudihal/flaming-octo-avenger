@@ -25,6 +25,11 @@ public class AutoWaveHandler : MonoBehaviour
 
 	void Start () 
 	{
+		Width = Screen.width/10 + 2;
+		Length = Screen.height/10 + 2;
+		SegmentsWidth = Width;
+		SegmentsLength = Length;
+
 		//creating vertices
 		Vector3[] verts = new Vector3[SegmentsWidth*SegmentsLength];
 		
@@ -238,13 +243,9 @@ public class AutoWaveHandler : MonoBehaviour
 	{
 		Vector2 vertex = NearestVertexTo(point, triangleIndex);
 
-		int i = (int)vertex.x;
-		int j = (int)vertex.y;
+		int i = Mathf.Clamp((int)vertex.x,3,SegmentsLength-3);
+		int j = Mathf.Clamp((int)vertex.y,3,SegmentsWidth-3);
 
-//		//clamping - dont want to distrub an edge vertex due below
-//		int i = Mathf.Clamp((int)vertex.x,2,SegmentsLength-2);
-//		int j = Mathf.Clamp((int)vertex.y,2,SegmentsWidth-2);
-		
 		if(vertexSet == 1)
 		{
 			UVSet1[i*SegmentsWidth+j].x += disturbStrength;

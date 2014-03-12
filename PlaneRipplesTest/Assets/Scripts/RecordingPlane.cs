@@ -111,6 +111,7 @@ public class RecordingPlane : MonoBehaviour
 	}
 
 	string tempString = "Enter Session Name";
+	string lvlTime = "3";
 	bool hasSessionStarted = false;
 	void OnGUI()
 	{
@@ -130,10 +131,12 @@ public class RecordingPlane : MonoBehaviour
 			return;
 		}
 
-		if (GUI.Button(new Rect(Screen.width-240, 10, 230, 20), "Save Level"))
+		lvlTime = GUI.TextField(new Rect(Screen.width-50,10,40,20),lvlTime,10);
+
+		if (GUI.Button(new Rect(Screen.width-190, 10, 120, 20), "Save Level"))
 			saveLevel();
 
-		if (GUI.Button(new Rect(Screen.width-350, Screen.height-30, 300, 20), "Save and Write Session"))
+		if (GUI.Button(new Rect(Screen.width-190, Screen.height-30, 180, 20), "Save and Write Session"))
 		{
 			saveAndWriteSession();
 			hasSessionStarted = false;
@@ -223,7 +226,11 @@ public class RecordingPlane : MonoBehaviour
 		for(int i = 0; i < lvlData.Length;i++)
 			lvlData[i] = findTriangleCenter(record.Pop());
 
-		session.levels.Add(new LevelWrapper(lvlData));
+		if(lvlTime == "")
+			lvlTime = "3";
+
+		session.levels.Add(new LevelWrapper(lvlData,float.Parse(lvlTime)));
+		lvlTime = "3";
 		clear();
 	}
 

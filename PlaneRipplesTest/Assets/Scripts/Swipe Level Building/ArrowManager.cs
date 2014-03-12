@@ -50,11 +50,6 @@ public class ArrowManager : MonoBehaviour
 	public static Vector3 END_SWIPE = new Vector3(0,-100,100);
 	public bool setUpArrows(Vector3[] positions, Vector3 heightOffset)
 	{
-		if(positions.Length > arrowCount)
-		{
-			Debug.Log("Not Enough Arrows");
-			return false;
-		}
 		activeArrowCount = 0;
 		arrows[activeArrowCount].setup(positions[0] + heightOffset);
 		Arrow previous = arrows[activeArrowCount];
@@ -76,6 +71,12 @@ public class ArrowManager : MonoBehaviour
 					arrows[activeArrowCount].setup(positions[i] + heightOffset,previous);
 					previous = arrows[activeArrowCount];
 					activeArrowCount++;
+
+					if(activeArrowCount >= positions.Length)
+					{
+						Debug.Log("Not Enough Arrows");
+						return false;
+					}
 				}
 			}
 		}

@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\CustomAssetUtility.cs" />
-     <Compile Include="Assets\Editor\RecordingPlane.cs" />
      <None Include="Assets\Shaders\WireframeSolid.shader" />
      <None Include="Assets\Shaders\Wireframe.shader" />
      <None Include="Assets\Shaders\GridBackground.shader" />
