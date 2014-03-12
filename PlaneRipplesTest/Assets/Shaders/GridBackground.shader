@@ -3,6 +3,7 @@
 	{
 		_BGTex ("GlowWeb GreyPack",2D) = "black"{}
 		_Ramp ("Ramp Texture",2D) = "white"{}
+		_BGColor ("Background Color",color) = (0,1,0,1)
 	}
 	SubShader 
 	{
@@ -20,6 +21,7 @@
 		 
 			sampler2D _Ramp;
 			sampler2D _BGTex;
+			fixed4 _BGColor;
 
 			struct v2f {
 				float4 vertex : POSITION;
@@ -51,7 +53,7 @@
 				vAccents = (1-step(gridHV.g,.05)) * vAccents;
 //				fixed4 bg = fixed4(0,1,0,1) * (gridHV.r + gridHV.g + hAccents + vAccents);
 				
-				return fixed4(0,1,0,1) * (gridHV.r + gridHV.g + hAccents + vAccents) + tex2D(_Ramp,i.texcoord1 + fixed2(0,frac(i.texcoord.y*6)));
+				return _BGColor * (gridHV.r + gridHV.g + hAccents + vAccents) + tex2D(_Ramp,i.texcoord1 + fixed2(0,frac(i.texcoord.y*6)));
 			}		
 			
 		ENDCG
