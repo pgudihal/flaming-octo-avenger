@@ -46,8 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\CustomAssetUtility.cs" />
-     <Compile Include="Assets\Editor\RecordingPlane.cs" />
+     <Compile Include="Assets\Editor\Move To Editor\CustomAssetUtility.cs" />
+     <Compile Include="Assets\Editor\Move To Editor\RecordingPlane.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvDatabaseInspector.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvFindItem.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />

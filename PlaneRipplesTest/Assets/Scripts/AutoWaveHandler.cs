@@ -25,10 +25,10 @@ public class AutoWaveHandler : MonoBehaviour
 
 	void Start () 
 	{
-		Width = Screen.width/10 + 2;
-		Length = Screen.height/10 + 2;
-		SegmentsWidth = Width;
-		SegmentsLength = Length;
+//		Width = Screen.width/10 + 2;
+//		Length = Screen.height/10 + 2;
+//		SegmentsWidth = Width;
+//		SegmentsLength = Length;
 
 		//creating vertices
 		Vector3[] verts = new Vector3[SegmentsWidth*SegmentsLength];

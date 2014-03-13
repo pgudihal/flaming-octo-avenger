@@ -6,7 +6,6 @@ public class SwipeLevelManager : MonoBehaviour
 
 	public SwipeSession[] sessions;
 	public float HitHeight = 1;
-	public float floatTimeperLvl = 5;
 	public GUIStyle timerStyle;
 	public GUIStyle gameOverStyle;
 
@@ -34,7 +33,6 @@ public class SwipeLevelManager : MonoBehaviour
 	{
 		hasGameStarted = true;
 		isGameOver = false;
-		timeLeft = floatTimeperLvl;
 	}
 	
 	// Update is called once per frame
@@ -116,7 +114,6 @@ public class SwipeLevelManager : MonoBehaviour
 			}
 		}
 
-		timeLeft += floatTimeperLvl;
 		currentLvlPositions = sessions[currentSession].levels[currentSessionLvl].levelData;
 		loadCurrentLevel();
 		return true;
@@ -124,6 +121,7 @@ public class SwipeLevelManager : MonoBehaviour
 
 	public void loadCurrentLevel()
 	{
+		timeLeft += sessions[currentSession].levels[currentSessionLvl].levelTime;
 		arrowManager.setUpArrows(currentLvlPositions, new Vector3(0,1,0));
 	}
 }
