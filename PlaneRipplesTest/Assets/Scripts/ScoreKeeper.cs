@@ -21,16 +21,19 @@ public class ScoreKeeper : MonoBehaviour
 	private GUIText guitext;
 	private const int FONT_SIZE = 10;
 	public int addFontAmount = 5;
+	private bool isOnRoll = false;//so that the sound only plays once
+	private SoundFXManager soundFX;
 
 	void Start () 
 	{
 		guitext = gameObject.GetComponent<GUIText>();
+		soundFX = GameObject.Find("SoundMistro").GetComponent<SoundFXManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if(Time.time > (lastScoreTime + minDownTime))
+		if(Time.time > (lastScoreTime + minDownTime) && isOnRoll)
 			breakRoll();
 
 		if(Input.GetMouseButton(0)) showRollScore();
@@ -69,6 +72,7 @@ public class ScoreKeeper : MonoBehaviour
 	private void growFont()
 	{
 		guitext.fontSize += addFontAmount;
+		isOnRoll = true;
 	}
 
 	public void giveTime(float t)
@@ -83,6 +87,9 @@ public class ScoreKeeper : MonoBehaviour
 		currentRollScore = 0;
 		currentRollCount = 0;
 		guitext.fontSize = FONT_SIZE;
+		soundFX.playFX(SoundFXManager.FXNames.BreakRoll);
+		Handheld.Vibrate();
+		isOnRoll = false;
 	}
 
 	void OnGUI()

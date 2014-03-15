@@ -9,8 +9,7 @@ public class SwipeLevelManager : MonoBehaviour
 	public GUIStyle timerStyle;
 	public GUIStyle gameOverStyle;
 
-
-	private float planarRayLength = 1000;
+	public LayerMask SwipeHitOnlyMask;
 	private Vector3[] currentLvlPositions;
 	private int currentSession = 0;
 	private int currentSessionLvl = 0;
@@ -20,6 +19,7 @@ public class SwipeLevelManager : MonoBehaviour
 	private ScoreKeeper scoreKeeper;
 	private float timeLeft;
 	private bool isGameOver = false;//isgameover is ONLY really used for the game over GUI to come up
+	private int currentRepeat = 0;
 
 	// Use this for initialization
 	void Start () 
@@ -84,10 +84,10 @@ public class SwipeLevelManager : MonoBehaviour
 			Vector3 hitAdjustedHeight = new Vector3(hit.point.x,1,hit.point.z);
 
 			RaycastHit[] hits;
-			hits = Physics.RaycastAll(transform.position, hitAdjustedHeight - lastFramePos, planarRayLength);
+			hits = Physics.RaycastAll(lastFramePos, hitAdjustedHeight - lastFramePos, Vector3.Distance(lastFramePos,hitAdjustedHeight), SwipeHitOnlyMask);
 			foreach(RaycastHit flatHit in hits)
 			{
-				if(flatHit.transform.tag == "Arrow" && flatHit.transform.GetComponent<Arrow>().hit())
+				if(flatHit.transform.GetComponent<Arrow>().hit())
 				{
 					scoreKeeper.addScore();
 
@@ -110,6 +110,7 @@ public class SwipeLevelManager : MonoBehaviour
 			if(currentSession >= sessions.Length)
 			{
 				currentSession = 0; //start back at the begining
+				currentRepeat++;
 				return false;
 			}
 		}
@@ -117,6 +118,11 @@ public class SwipeLevelManager : MonoBehaviour
 		currentLvlPositions = sessions[currentSession].levels[currentSessionLvl].levelData;
 		loadCurrentLevel();
 		return true;
+	}
+
+	public int getCurrentLevel()
+	{
+		return (currentRepeat + 1) * (currentSession + 1) * (currentSessionLvl + 1);
 	}
 
 	public void loadCurrentLevel()
