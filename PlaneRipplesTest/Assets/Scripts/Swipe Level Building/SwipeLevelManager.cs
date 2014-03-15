@@ -10,7 +10,7 @@ public class SwipeLevelManager : MonoBehaviour
 	public GUIStyle gameOverStyle;
 
 
-	private float planarRayLength = 10;
+	private float planarRayLength = 1000;
 	private Vector3[] currentLvlPositions;
 	private int currentSession = 0;
 	private int currentSessionLvl = 0;

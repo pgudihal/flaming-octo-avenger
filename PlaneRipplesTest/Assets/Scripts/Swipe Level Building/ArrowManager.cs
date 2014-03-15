@@ -51,11 +51,17 @@ public class ArrowManager : MonoBehaviour
 	public bool setUpArrows(Vector3[] positions, Vector3 heightOffset)
 	{
 		activeArrowCount = 0;
-		arrows[activeArrowCount].setup(positions[0] + heightOffset);
+		int i = 0;
+		//incase the first few indexers point to endswipes
+		while(positions[i] == END_SWIPE)
+			i++;
+
+		arrows[activeArrowCount].setup(positions[i] + heightOffset);
 		Arrow previous = arrows[activeArrowCount];
+		i++;
 		activeArrowCount++;
 
-		for(int i = 1; i < positions.Length; i++)
+		for(; i < positions.Length; i++)
 		{
 			if(positions[i] == END_SWIPE)
 			{
