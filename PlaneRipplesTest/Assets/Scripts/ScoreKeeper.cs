@@ -9,7 +9,7 @@ public class ScoreKeeper : MonoBehaviour
 	//how long they have to hit the next arrow so that it doesnt break their score
 	public float minDownTime = .4f;
 	public GUIStyle style;
-
+	public UILabel totalScoreText;
 
 
 	private int totalScore = 0;
@@ -28,6 +28,7 @@ public class ScoreKeeper : MonoBehaviour
 	{
 		guitext = gameObject.GetComponent<GUIText>();
 		soundFX = GameObject.Find("SoundMistro").GetComponent<SoundFXManager>();
+		totalScoreText = GameObject.Find ("Score").GetComponent<UILabel> ();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +39,7 @@ public class ScoreKeeper : MonoBehaviour
 
 		if(Input.GetMouseButton(0)) showRollScore();
 		if(Input.GetMouseButtonUp(0)) guitext.text = "";
+		totalScoreText.text = "" + TotalScore;
 	}
 
 	private void showRollScore()
@@ -92,8 +94,8 @@ public class ScoreKeeper : MonoBehaviour
 		isOnRoll = false;
 	}
 
-	void OnGUI()
-	{
-		GUI.Box(new Rect(10,10,200,20),"Score: " + TotalScore,style);
-	}
+	//void OnGUI()
+	//{
+//		GUI.Box(new Rect(10,10,200,20),"Score: " + TotalScore,style);//
+	//}
 }

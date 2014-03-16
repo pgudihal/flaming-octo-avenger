@@ -8,6 +8,7 @@ public class SwipeLevelManager : MonoBehaviour
 	public float HitHeight = 1;
 	public GUIStyle timerStyle;
 	public GUIStyle gameOverStyle;
+	public UILabel timerUI, gameOver, finalScore;
 
 	public LayerMask SwipeHitOnlyMask;
 	private Vector3[] currentLvlPositions;
@@ -26,6 +27,9 @@ public class SwipeLevelManager : MonoBehaviour
 	{
 		scoreKeeper = GameObject.Find("ScoreKeeper").GetComponent<ScoreKeeper>();
 		currentLvlPositions = sessions[currentSession].levels[currentSessionLvl].levelData;
+		timerUI = GameObject.Find ("Timer").GetComponent<UILabel> ();
+		gameOver = GameObject.Find ("Game Over").GetComponent<UILabel> ();
+		finalScore = GameObject.Find ("Final Score").GetComponent<UILabel> ();
 		loadCurrentLevel();
 	}
 
@@ -38,6 +42,19 @@ public class SwipeLevelManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if (!isGameOver) {
+			timerUI.text = timeLeft.ToString();
+			gameOver.enabled = false;
+			finalScore.enabled = false;
+		}
+		else 
+		{
+			timerUI.text = "";
+			gameOver.enabled = true;
+			finalScore.enabled = true;
+			gameOver.text = "GAME OVER";
+			finalScore.text = "Final Score: " + scoreKeeper.TotalScore;
+		}			
 		if(!hasGameStarted || isGameOver) return;
 		if(arrowManager.areArrowsReturned()) LoadNextLevel();
 		if(Input.GetMouseButton(0)) pressing();
@@ -48,19 +65,19 @@ public class SwipeLevelManager : MonoBehaviour
 			timeLeft -= Time.deltaTime;
 	}
 
-	void OnGUI()
+	/*void OnGUI()
 	{
 		if(isGameOver)
 		{
-			GUI.Box(new Rect(Screen.width/4,Screen.height/4,Screen.width/2,Screen.height/2),"Game Over",gameOverStyle);
-			timerStyle.fontSize = 30;
-			GUI.Box(new Rect(Screen.width/4 + 200,Screen.height/4 + 200,Screen.width/2,Screen.height/2),"Score: " + scoreKeeper.TotalScore,timerStyle);
+			//GUI.Box(new Rect(Screen.width/4,Screen.height/4,Screen.width/2,Screen.height/2),"Game Over",gameOverStyle);
+			//timerStyle.fontSize = 30;
+			//GUI.Box(new Rect(Screen.width/4 + 200,Screen.height/4 + 200,Screen.width/2,Screen.height/2),"Score: " + scoreKeeper.TotalScore,timerStyle);
 		}
 		else
 		{
-			GUI.Box(new Rect(Screen.width - 200,10,200,20),"Time: " + timeLeft,timerStyle);
+			//GUI.Box(new Rect(Screen.width - 200,10,200,20),"Time: " + timeLeft,timerStyle);
 		}
-	}
+	}*/
 
 	private void pressing()
 	{
