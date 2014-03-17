@@ -79,6 +79,16 @@ public class SwipeLevelManager : MonoBehaviour
 		}
 	}*/
 
+	private void restart()
+	{
+		gameOver.enabled = false;
+		finalScore.enabled = false;
+
+		currentSession = 0;
+		currentSessionLvl = 0;
+		timeLeft = 0;
+	}
+
 	private void pressing()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

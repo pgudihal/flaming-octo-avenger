@@ -10,13 +10,21 @@ public class Countdown : MonoBehaviour
 	private int texIndex = 0;
 	private float X = 0;
 	private float Y = 0;
+	private float fade = 1;
 
 	private float nextSwitchTime;
+
+	//start really matters here since when the game restarts
+	//this script is reneabled calling start to reinitialize any vars
 	void Start () 
 	{
 		nextSwitchTime = Time.time + holdTime;
+		texIndex = 0;
+		float X = 0;
+		float Y = 0;
+		float fade = 1;
 	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -28,18 +36,29 @@ public class Countdown : MonoBehaviour
 			texIndex++;
 
 			if(texIndex >= textures.Length)
-			{
-				gameObject.GetComponent<SwipeLevelManager>().startGame();
 				this.enabled = false;
+
+			if(texIndex == textures.Length-1)
+			{
+				nextSwitchTime = Time.time + holdTime * .5f;
+				gameObject.GetComponent<SwipeLevelManager>().startGame();
 			}
+			else
+				nextSwitchTime = Time.time + holdTime;
+
 			X = 0;
 			Y = 0;
-			nextSwitchTime = Time.time + holdTime;
 		}
 	}
 
 	void OnGUI() 
 	{
+		if(texIndex == textures.Length - 1)
+		{
+			GUI.color = new Color(1,1,1,fade);
+			fade -= .95f*Time.deltaTime;
+		}
+
 		GUI.DrawTexture(new Rect(X/2, Y/2, Screen.width-X, Screen.height-Y),textures[texIndex],
 		                ScaleMode.StretchToFill);
 	}
