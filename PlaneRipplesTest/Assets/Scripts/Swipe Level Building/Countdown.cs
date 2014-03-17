@@ -20,9 +20,9 @@ public class Countdown : MonoBehaviour
 	{
 		nextSwitchTime = Time.time + holdTime;
 		texIndex = 0;
-		float X = 0;
-		float Y = 0;
-		float fade = 1;
+		X = 0;
+		Y = 0;
+		fade = 1;
 	}
 
 	// Update is called once per frame
