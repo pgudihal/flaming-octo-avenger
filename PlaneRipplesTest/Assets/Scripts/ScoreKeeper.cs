@@ -82,6 +82,17 @@ public class ScoreKeeper : MonoBehaviour
 		lastScoreTime += t;
 	}
 
+	public void reset()
+	{
+		totalScore = 0;
+		currentRollScore = 0;
+		currentRollCount = 0;
+		oldMultiplier = 5;
+		lastScoreTime = 0;
+
+		isOnRoll = false;
+	}
+
 	//this function is called when you want to reset the bonuses given
 	//when the player is "on a roll"
 	public void breakRoll()
@@ -89,7 +100,10 @@ public class ScoreKeeper : MonoBehaviour
 		currentRollScore = 0;
 		currentRollCount = 0;
 		guitext.fontSize = FONT_SIZE;
-		soundFX.playFX(SoundFXManager.FXNames.BreakRoll);
+
+		//only play the noise when your mouse is down
+		if(Input.GetMouseButton(0))
+			soundFX.playFX(SoundFXManager.FXNames.BreakRoll);
 		Handheld.Vibrate();
 		isOnRoll = false;
 	}

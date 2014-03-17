@@ -60,7 +60,10 @@ public class SwipeLevelManager : MonoBehaviour
 		if(Input.GetMouseButton(0)) pressing();
 
 		if(timeLeft <= 0)
+		{
 			isGameOver = true;
+			StartCoroutine("waitForRestart");
+		}
 		else
 			timeLeft -= Time.deltaTime;
 	}
@@ -83,10 +86,19 @@ public class SwipeLevelManager : MonoBehaviour
 	{
 		gameOver.enabled = false;
 		finalScore.enabled = false;
+		hasGameStarted = true;
+		isGameOver = false;
+		currentRepeat = 0;
 
 		currentSession = 0;
 		currentSessionLvl = 0;
 		timeLeft = 0;
+
+		scoreKeeper.reset();
+		arrowManager.reset();
+
+		currentLvlPositions = sessions[currentSession].levels[currentSessionLvl].levelData;
+		loadCurrentLevel();
 	}
 
 	private void pressing()
@@ -156,5 +168,15 @@ public class SwipeLevelManager : MonoBehaviour
 	{
 		timeLeft += sessions[currentSession].levels[currentSessionLvl].levelTime;
 		arrowManager.setUpArrows(currentLvlPositions, new Vector3(0,1,0));
+	}
+
+	public IEnumerator waitForRestart()
+	{
+		yield return new WaitForSeconds(1.0f);
+		while(isGameOver)
+		{
+			if(Input.GetMouseButtonDown(0)) restart();
+			yield return null;
+		}
 	}
 }

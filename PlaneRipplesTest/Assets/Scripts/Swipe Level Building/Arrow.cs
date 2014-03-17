@@ -30,6 +30,14 @@ public class Arrow : MonoBehaviour
 		collider.enabled = false;
 	}
 
+	public void reset()
+	{
+		isOnBoard = false;
+		isLookingAt = false;
+		renderer.enabled = false;
+		collider.enabled = false;
+	}
+
 	void Update()
 	{
 		if(!isLookingAt)

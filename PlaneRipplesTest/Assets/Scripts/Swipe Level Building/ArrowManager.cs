@@ -28,14 +28,12 @@ public class ArrowManager : MonoBehaviour
 
 		arrows[arrowCount-1].initialize(null);
 	}
-	void Start () 
-	{
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	public void reset()
+	{
+		for(int i = 0; i < arrowCount; i++)
+			arrows[i].reset();
+		activeArrowCount = 0;
 	}
 
 	public void arrowReturned()
