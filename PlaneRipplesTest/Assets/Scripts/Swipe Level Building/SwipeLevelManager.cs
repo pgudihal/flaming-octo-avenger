@@ -43,13 +43,14 @@ public class SwipeLevelManager : MonoBehaviour
 	void Update () 
 	{
 		if (!isGameOver) {
-			timerUI.text = timeLeft.ToString();
+			timerUI.text = "Time: " + timeLeft.ToString("F2");
+
 			gameOver.enabled = false;
 			finalScore.enabled = false;
 		}
 		else 
 		{
-			timerUI.text = "";
+			timerUI.text = "Time: 0";
 			gameOver.enabled = true;
 			finalScore.enabled = true;
 			gameOver.text = "GAME OVER";
