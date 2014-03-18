@@ -19,8 +19,9 @@ public class ScoreKeeper : MonoBehaviour
 	private float lastScoreTime = 0;
 
 	private GUIText guitext;
-	private const int FONT_SIZE = 10;
-	public int addFontAmount = 5;
+	private float FONT_SIZE = 25;
+	private float fontRatio;
+	private float addFontAmount = 3;
 	private bool isOnRoll = false;//so that the sound only plays once
 	private SoundFXManager soundFX;
 
@@ -29,6 +30,11 @@ public class ScoreKeeper : MonoBehaviour
 		guitext = gameObject.GetComponent<GUIText>();
 		soundFX = GameObject.Find("SoundMistro").GetComponent<SoundFXManager>();
 		totalScoreText = GameObject.Find ("Score").GetComponent<UILabel> ();
+
+		//this fixes the fonts to be consistant
+		fontRatio = Screen.height/1280.0f;
+		FONT_SIZE *= fontRatio;
+		addFontAmount *= fontRatio;
 	}
 	
 	// Update is called once per frame
@@ -73,7 +79,7 @@ public class ScoreKeeper : MonoBehaviour
 
 	private void growFont()
 	{
-		guitext.fontSize += addFontAmount;
+		guitext.fontSize += (int)addFontAmount;
 		isOnRoll = true;
 	}
 
@@ -99,12 +105,14 @@ public class ScoreKeeper : MonoBehaviour
 	{
 		currentRollScore = 0;
 		currentRollCount = 0;
-		guitext.fontSize = FONT_SIZE;
+		guitext.fontSize = (int)FONT_SIZE;
 
 		//only play the noise when your mouse is down
 		if(Input.GetMouseButton(0))
+		{
 			soundFX.playFX(SoundFXManager.FXNames.BreakRoll);
-		Handheld.Vibrate();
+			Handheld.Vibrate();
+		}
 		isOnRoll = false;
 	}
 
