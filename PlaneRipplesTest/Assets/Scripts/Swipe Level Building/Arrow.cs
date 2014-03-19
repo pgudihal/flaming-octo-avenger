@@ -17,6 +17,7 @@ public class Arrow : MonoBehaviour
 	//used so that on the first update this arrow will look at its next arrow
 	private bool isLookingAt = false;
 	private bool isUsingEndMat = false;
+	private SoundFXManager soundFX;
 
 	private Arrow(bool isOnBoard)
 	{
@@ -26,6 +27,7 @@ public class Arrow : MonoBehaviour
 	void Start () 
 	{
 		manager = transform.parent.gameObject.GetComponent<ArrowManager>();
+		soundFX = GameObject.Find("SoundMistro").GetComponent<SoundFXManager>();
 		renderer.enabled = false;
 		collider.enabled = false;
 	}
@@ -91,6 +93,12 @@ public class Arrow : MonoBehaviour
 		renderer.enabled = false;
 		collider.enabled = false;
 		isOnBoard = false;
+
+		if(IsEndingArrow)
+		{
+			soundFX.playFX(SoundFXManager.FXNames.FinishedSwipe);
+		}
+
 		return true;
 	}
 }

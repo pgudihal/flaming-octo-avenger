@@ -5,7 +5,7 @@ public sealed class SoundFXManager : MonoBehaviour
 {
 
 	public AudioClip[] FX;
-	public enum FXNames{BreakRoll = 0};
+	public enum FXNames{BreakRoll = 0, FinishedSwipe = 1};
 
 	private AudioSource[] fxSources;
 
