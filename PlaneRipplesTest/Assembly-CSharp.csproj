@@ -188,6 +188,7 @@
      <Compile Include="Assets\Scripts\WavesHandler.cs" />
      <Compile Include="Assets\Scripts\WavesHandlerOriginal.cs" />
      <Compile Include="Assets\Scripts\randomMovement.cs" />
+     <Compile Include="Assets\UIFontSize.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.3.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
